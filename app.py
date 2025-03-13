@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import date
 import plotly.express as px
 
-st.set_page_config(page_title="Bayt al-Hikma Library", layout="wide", page_icon="📚")
+st.set_page_config(page_title="Bayt-al-Hikma Library", layout="wide", page_icon="favicon.ico")
 
 # Custom CSS for better styling
 st.markdown("""
