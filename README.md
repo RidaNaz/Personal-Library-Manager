@@ -4,7 +4,7 @@
   <img src="https://komarev.com/ghpvc/?username=ridanaz&label=Profile%20views&color=CA0AB3&style=flat" alt="ridanaz" /> 
 </p>
 
-# Unit Converter
+# Bayt al-Hikma: Database Connectivity
 
 ## 1. Run these Commands:
 
