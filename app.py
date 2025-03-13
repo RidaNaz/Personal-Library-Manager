@@ -11,7 +11,7 @@ st.markdown("""
     <style>
     .sidebar .sidebar-content { background-color: #f4f4f4; }
     .block-container { padding: 2rem; }
-    .stButton>button { border-radius: 8px; background-color: #4CAF50; color: white; }
+    .stButton>button { border-radius: 8px; color: white; }
     .stDownloadButton>button { background-color: #0073e6; color: white; }
     </style>
 """, unsafe_allow_html=True)
@@ -25,11 +25,10 @@ books = get_all_books()
 # Sidebar: Filters
 st.sidebar.subheader("Filter by")
 filter_genre = st.sidebar.selectbox("Genre", ["All"] + list(set(book.genre for book in books)))
-filter_date = st.sidebar.date_input("Added After", value=date(2000, 1, 1))
 
 filtered_books = [
     book for book in books
-    if (filter_genre == "All" or book.genre == filter_genre) and book.added_on >= filter_date
+    if filter_genre == "All" or book.genre == filter_genre
 ]
 
 # Display books in sidebar with better design
@@ -44,13 +43,14 @@ if filtered_books:
 else:
     st.sidebar.info("No books match your filters.")
 
-st.sidebar.markdown("---")
-
 # Main: Add a new book form
+if "form_key" not in st.session_state:
+    st.session_state.form_key = ""
+
 with st.form("add_book_form"):
     st.subheader("📚 Add a New Book")
-    title = st.text_input("Book Title")
-    author = st.text_input("Author")
+    title = st.text_input("Book Title", value=st.session_state.form_key)
+    author = st.text_input("Author", value=st.session_state.form_key)
     genre = st.selectbox("Genre", ["Fiction", "Non-fiction", "Mystery", "Fantasy", "Sci-Fi", "Biography", "History", "Other"])
     added_on = st.date_input("Date Added", value=date.today())
     submit = st.form_submit_button("➕ Add Book")
@@ -58,6 +58,7 @@ with st.form("add_book_form"):
     if submit and title and author:
         add_book(title, author, genre)
         st.success(f"Added '{title}' by {author}")
+        st.session_state.form_key = ""  # Reset form fields
         st.rerun()
 
 # Export to CSV
